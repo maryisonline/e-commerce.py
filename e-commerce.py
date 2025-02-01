@@ -30,8 +30,23 @@ print(df.describe()) # estatisticas basicas
 
 # 4
 # o streamlit vai permitir q eu visualize esse dashboard localmente
-import streamlit as st
+# import streamlit as st
 
-st.title("Customer Behavior - Dashboard")
-st.write("Dados analisados:")
-st.dataframe(df.head())
+# st.title("Customer Behavior - Dashboard")
+# st.write("Dados analisados:")
+# st.dataframe(df.head())
+
+from dash import Dash, dcc, html
+import plotly.graph_objects as go
+
+app = Dash(__name__)
+
+fig = go.Figure(data=[go.Bar(x=df['Gender'], y=df['Total Spend'])])
+
+app.layout = html.Div([
+    html.H1("Dashboard Kaggle"),
+    dcc.Graph(figure=fig)
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
